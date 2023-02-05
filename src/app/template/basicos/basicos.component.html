@@ -3,7 +3,7 @@
 
 <div class="roe">
     <div class="col">
-        <form (ngSubmit)="guardar(form)" 
+        <form (ngSubmit)="guardar()" 
               #form="ngForm" 
               autocomplete="off">
 
@@ -20,7 +20,7 @@
                             placeholder="Nombre del producto">
                     <span *ngIf="productoValido()"
                           class="form-text text-danger">
-                        Debe de ser de 3 letras
+                        Debe de ser de 3 letras minimo
                     </span>
                 </div>
             </div>
@@ -28,18 +28,19 @@
            
             <!-- Campo de precio -->
             <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Producto</label>
+                <label class="col-sm-3 col-form-label">Precio</label>
                 <div class="col-sm-9">
                     <input type="number"
                             name="precio"
-                            ngModel
+                            [ngModel]="defaultValues.precio"
                             class="form-control"
                             min="0"
+                            required
                             placeholder="Existencias del producto">
 
                     <span *ngIf="precioValido()"
                           class="form-text text-danger">
-                        El precio debe ser 0 o mayor
+                        El precio debe ser mayor a 0
                     </span>
                 </div>
             </div>
@@ -47,13 +48,16 @@
             
             <!-- Campo de Existencias -->
             <div class="mb-3 row">
-                <label class="col-sm-3 col-form-label">Producto</label>
+                <label class="col-sm-3 col-form-label">Existencias</label>
                 <div class="col-sm-9">
                     <input type="number"
                             name="existencias"
-                            ngModel
+                            [ngModel]="defaultValues.existencias"
+                            customMin
+                            [minimo]="0"
                             class="form-control"
-                            placeholder="Precio del producto">
+                            placeholder="Precio del producto"
+                            required>
                 </div>
             </div>
 
@@ -61,7 +65,7 @@
             <div class="row">
                 <div class="col">
                     <button type="submit" 
-                            [disabled]="form.valid"
+                            [disabled]="!form.valid"
                             class="btn btn-primary float-end">
                         Guardar
                     </button>
@@ -85,6 +89,6 @@
         
         <span>Value</span>
         <pre>{{ form.value | json }}</pre>
-
+        
     </div>
 </div>
